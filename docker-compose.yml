@@ -4,6 +4,15 @@ services:
     build: ./docker/php
     volumes:
       - ./app:/usr/share/nginx/html
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
   web:
     image: "nginx:1.13.8-alpine"
     volumes:
@@ -13,3 +22,5 @@ services:
       - "80:80"
     links:
       - "php"
+    depends_on: 
+      - "db"
